@@ -3,3 +3,11 @@
   display: none;
 
 }
+.card {
+  text-align: center;
+  margin-bottom: 30px;
+}
+#canvas {
+  width: 100px;
+  height: 100px;
+}
