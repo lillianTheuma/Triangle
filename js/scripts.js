@@ -25,7 +25,7 @@ $(document).ready(function() {
     } else {
       console.log("Invalid inputs");
     }
-    draw(genCoords(solve(side1,side2,side3),side1,side2),side2);
+    draw(genCoords(solve(side1,side2,side3),side1,side3),side3);
 
     $(".type").show();
 
@@ -59,30 +59,33 @@ function solve(side1,side2,side3) {
   var angles = [];
   angles[0] = Math.acos((Math.pow(side2, 2) + Math.pow(side3, 2) - Math.pow(side1, 2) / (2 * side2 * side3))%1);
   angles[1] = Math.acos((Math.pow(side3, 2) + Math.pow(side1, 2) - Math.pow(side2, 2) / (2 * side1 * side3))%1);
-  angles[2] = (180 - angles[0] - angles[1]);
-  console.log(angles[0]+angles[1]+angles[2])
+  angles[2] = (3.14159265359 - angles[0] - angles[1]);
+  console.log(angles[0]+" "+angles[1]+ " " +angles[2])
   return angles;
 }
-function genCoords(angles,side1,side2){
+function genCoords(angles,side1,side3){
   var a = angles[0];
   var b = angles[1];
-
+  console.log(side1,side3)
   var rise = (side1 * (Math.sin(a)));
-  var run = (Math.sqrt(Math.pow(side1, 2)-Math.pow(side2, 2)));
+  var run = (Math.sqrt((side3 * side3)-(rise * rise)));
   var coords = [run,rise];
+  console.log(run+" "+rise);
   return coords;
 }
-function draw(coords, side2) {
+function draw(coords, side3) {
   var canvas = document.getElementById('canvas');
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
-    var coords = [(coords[0]*5),(coords[1]*5)];
-    var side2;
     console.log(coords[0],coords[1])
+    var coords = [(coords[0]*20),(coords[1]*20)];
+    var side2;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
-    ctx.moveTo(50, 50);
-    ctx.lineTo(coords[0],coords[1]);
-    ctx.lineTo(50, (50+side2));
+    ctx.moveTo(0, 0);
+    ctx.lineTo(coords[1],coords[0]);
+    ctx.lineTo((side3)*20,0);
     ctx.fill();
+
   }
 }
